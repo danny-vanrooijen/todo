@@ -2,21 +2,20 @@
   <div class="flex-1 md:flex items-center mb-8">
     <div class="md:w-3/4 mb-4 md:mb-0 md:pr-2">
       <input
-        class="border border-black p-2 w-full"
-        type="text"
+        class="border border-gray-300 p-2 w-full rounded"
+        type="search"
         v-model="item"
+        v-on:keyup.enter="addToList"
       />
     </div>
     <div class="md:w-1/4 md:pl-2">
       <tp-button
         class="w-full text-center"
         color="purple"
-        v-on:click="addToList"
+        @click="addToList"
         icon="plus-circle"
         type="fas"
         iconLeft
-        height="22"
-        width="22"
       >
         Add to list
       </tp-button>
@@ -40,7 +39,14 @@ export default {
   },
   methods: {
     addToList() {
-      this.todoList.push(this.item);
+      if (this.item) {
+        this.todoList.push({
+          name: this.item,
+          completed: false,
+          editing: false
+        });
+        this.item = "";
+      }
     }
   }
 };

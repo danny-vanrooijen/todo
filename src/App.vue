@@ -1,7 +1,7 @@
 <template>
-  <div class="container h-3/4 py-5 md:py-10">
+  <div class="container md:w-3/4 lg:w-1/2 h-3/4 py-5 md:py-10">
     <h1
-      class="font-header text-5xl md:leading-normal md:font-extrabold text-center mb-10"
+      class="font-header text-5xl md:leading-normal font-extrabold text-center mb-10"
     >
       My to do list
     </h1>
@@ -22,7 +22,7 @@ export default {
   },
   data() {
     return {
-      todoList: ["Create a Vue project"],
+      todoList: [],
       item: "This is a test item"
     };
   }
