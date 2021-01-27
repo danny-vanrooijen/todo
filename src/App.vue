@@ -22,7 +22,7 @@ export default {
   },
   data() {
     return {
-      todoList: [],
+      todoList: {},
       item: "This is a test item"
     };
   }

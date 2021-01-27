@@ -42,21 +42,16 @@ export default {
   methods: {
     addToList() {
       if (this.item) {
-        // this.todoList.push({
-        //   name: this.item,
-        //   completed: false,
-        //   editing: false
-        // });
-        // this.item = "";
-
+        // First collect the right database
         db.collection("todo-items")
+          // Add the new item to the database
           .add({
             name: this.item,
             completed: false,
             editing: false
           })
+          // Clear the input field to get ready for new edit
           .then(() => {
-            alert("Todo item successfully added!");
             this.item = "";
           })
           .catch(error => {
