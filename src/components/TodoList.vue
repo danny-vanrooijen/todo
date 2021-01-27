@@ -1,7 +1,10 @@
 <template>
   <div>
     <ul class="rounded overflow-hidden bg-white border border-gray-300">
-      <li class="self-start flex-grow p-2 text-gray-400" v-if="todoList == 0">
+      <li
+        class="self-start flex-grow p-2 text-gray-400 bg-gray-100 border border-transparent"
+        v-if="todoList == 0"
+      >
         You have not added any things to do
       </li>
       <li
@@ -70,6 +73,8 @@
 </template>
 
 <script>
+import { db } from "@/firestore";
+
 export default {
   props: ["list"],
   data() {
@@ -78,7 +83,29 @@ export default {
       done: []
     };
   },
+  mounted() {
+    var query = db.collection("todo-items");
+
+    query.onSnapshot(snapshot => {
+      snapshot.docChanges().forEach(change => {
+        if (change.type === "removed") {
+          console.log("Doc is removed");
+          return;
+        } else {
+          var item = change.doc.data();
+          this.addItem(item.name, item.completed, item.editing);
+        }
+      });
+    });
+  },
   methods: {
+    addItem(text, completed, editing) {
+      this.todoList.push({
+        name: text,
+        completed: completed,
+        editing: editing
+      });
+    },
     removeItem(index) {
       this.todoList.splice(index, 1);
     },

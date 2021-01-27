@@ -25,6 +25,7 @@
 
 <script>
 import TpButton from "./template/TpButton";
+import { db } from "@/firestore";
 
 export default {
   props: ["list"],
@@ -34,18 +35,33 @@ export default {
   data() {
     return {
       item: "",
-      todoList: this.list
+      todoList: this.list,
+      message: {}
     };
   },
   methods: {
     addToList() {
       if (this.item) {
-        this.todoList.push({
-          name: this.item,
-          completed: false,
-          editing: false
-        });
-        this.item = "";
+        // this.todoList.push({
+        //   name: this.item,
+        //   completed: false,
+        //   editing: false
+        // });
+        // this.item = "";
+
+        db.collection("todo-items")
+          .add({
+            name: this.item,
+            completed: false,
+            editing: false
+          })
+          .then(() => {
+            alert("Todo item successfully added!");
+            this.item = "";
+          })
+          .catch(error => {
+            console.log(error);
+          });
       }
     }
   }

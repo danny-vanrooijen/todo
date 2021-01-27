@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import AddItem from "./components/AddItem.vue";
-import TodoList from "./components/TodoList.vue";
+import AddItem from "./components/AddItem";
+import TodoList from "./components/TodoList";
 
 export default {
   name: "App",
