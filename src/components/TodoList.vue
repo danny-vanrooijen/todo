@@ -22,6 +22,7 @@
             }"
             :disabled="!todoList[index].editing"
             :value="todo.name"
+            v-on:keyup.enter="$event.target.blur()"
             @blur="editItem(index, $event)"
           />
         </div>
@@ -132,6 +133,9 @@ export default {
       if (this.todoList[index].name === event.target.value) {
         return;
       }
+      // Update the field in the active app
+      this.todoList[index].name = event.target.value;
+      // Update the database
       this.getDatabase()
         .doc(index)
         .update({
